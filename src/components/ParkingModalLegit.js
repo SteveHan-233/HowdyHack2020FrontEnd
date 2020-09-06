@@ -1,47 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Image, View, Modal, Text } from 'react-native';
-import { BlurView } from 'expo-blur';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Ionicons } from '@expo/vector-icons';
-import socket from 'socket.io-client';
-
-const carPos = [
-  { top: 388, left: 75 },
-  { top: 354, left: 75 },
-  { top: 320, left: 75 },
-  { top: 286, left: 75 },
-  { top: 252, left: 75 },
-  { top: 218, left: 75 },
-  { top: 184, left: 75 },
-  { top: 150, left: 75 },
-  { top: 116, left: 75 },
-  { top: 82, left: 75 },
-  { top: 82, left: 210 },
-  { top: 116, left: 210 },
-  { top: 150, left: 210 },
-  { top: 184, left: 210 },
-  { top: 218, left: 210 },
-  { top: 252, left: 210 },
-  { top: 286, left: 210 },
-  { top: 320, left: 210 },
-  { top: 354, left: 210 },
-  { top: 388, left: 210 },
-  { top: 422, left: 210 },
-  { top: 456, left: 210 },
-  { top: 490, left: 275 },
-  { top: 456, left: 275 },
-  { top: 422, left: 275 },
-  { top: 388, left: 275 },
-  { top: 354, left: 275 },
-  { top: 320, left: 275 },
-  { top: 286, left: 275 },
-  { top: 252, left: 275 },
-  { top: 218, left: 275 },
-  { top: 184, left: 275 },
-  { top: 150, left: 275 },
-  { top: 116, left: 275 },
-  { top: 82, left: 275 },
-];
+import React, { useState, useEffect } from "react";
+import { StyleSheet, Image, View, Modal, Text } from "react-native";
+import { BlurView } from "expo-blur";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { Ionicons } from "@expo/vector-icons";
+import socket from "socket.io-client";
+import { lot1CarPos } from "../const";
 
 // Used to test random placement of cars
 // const genRandCars = () => {
@@ -52,14 +15,14 @@ const carPos = [
 //   return cars;
 // };
 
-const ENDPOINT = 'http://0b69ff344362.ngrok.io';
+const ENDPOINT = "http://0b69ff344362.ngrok.io";
 
 export default ({ modalOpen, setModalOpen }) => {
   const [cars, setCars] = useState([]);
 
   useEffect(() => {
     const s = socket(ENDPOINT);
-    s.on('frame', (data) => {
+    s.on("frame", data => {
       setCars(data);
     });
 
@@ -71,7 +34,7 @@ export default ({ modalOpen, setModalOpen }) => {
       transparent={true}
       visible={modalOpen}
       onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
+        Alert.alert("Modal has been closed.");
       }}
       style={styles.modal}
     >
@@ -82,13 +45,13 @@ export default ({ modalOpen, setModalOpen }) => {
         >
           <Ionicons name="ios-close-circle" size={30} color="#500000" />
         </TouchableOpacity>
-        <Image source={require('../../assets/lot1.png')} style={styles.lot} />
+        <Image source={require("../../assets/lot1.png")} style={styles.lot} />
         {cars.map((car, ind) => {
           if (car)
             return (
               <Image
-                source={require('../../assets/car-top.png')}
-                style={{ ...styles.car, ...carPos[ind] }}
+                source={require("../../assets/car-top.png")}
+                style={{ ...styles.car, ...loot1CarPos[ind] }}
                 key={ind}
               />
             );
@@ -101,27 +64,27 @@ export default ({ modalOpen, setModalOpen }) => {
 
 const styles = StyleSheet.create({
   modal: {
-    marginTop: 50,
+    marginTop: 50
   },
   blur: {
     marginTop: 280,
-    height: '70%',
+    height: "70%",
     borderRadius: 50,
-    padding: 25,
+    padding: 25
   },
   icon: {
-    marginLeft: 'auto',
+    marginLeft: "auto"
   },
   lot: {
-    height: '80%',
-    width: '100%',
-    resizeMode: 'contain',
+    height: "80%",
+    width: "100%",
+    resizeMode: "contain",
     marginTop: 20,
-    position: 'relative',
+    position: "relative"
   },
   car: {
-    position: 'absolute',
+    position: "absolute",
     height: 30,
-    width: 60,
-  },
+    width: 60
+  }
 });
