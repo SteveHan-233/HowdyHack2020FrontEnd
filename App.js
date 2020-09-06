@@ -7,7 +7,11 @@ import Signin from './src/screens/Signin';
 export default function App() {
   const [authenticated, setAuthenticated] = useState(false);
   return (
-    <SafeAreaView style={{ backgroundColor: '#500000' }}>
+    <SafeAreaView
+      style={{
+        backgroundColor: '#500000',
+      }}
+    >
       <StatusBar style="light" />
       {authenticated ? <Map /> : <Signin setAuthenticated={setAuthenticated} />}
     </SafeAreaView>
