@@ -3,6 +3,7 @@ import { StyleSheet, Image, View, Modal, Text } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
+import socket from 'socket.io-client';
 
 const carPos = [
   { top: 388, left: 75 },
@@ -51,20 +52,19 @@ const carPos = [
 //   return cars;
 // };
 
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+const ENDPOINT = 'http://0b69ff344362.ngrok.io';
 
 export default ({ modalOpen, setModalOpen }) => {
   const [cars, setCars] = useState([]);
 
-  useEffect(async () => {
-    const f = require('./precompute.json');
-    for (arr of f) {
-      console.log(arr);
-      setCars(arr);
-      await delay(1000);
-    }
-  }, []);
+  useEffect(() => {
+    const s = socket(ENDPOINT);
+    s.on('frame', (data) => {
+      setCars(data);
+    });
 
+    return () => s.disconnect();
+  }, []);
   return (
     <Modal
       animationType="slide"
@@ -84,7 +84,7 @@ export default ({ modalOpen, setModalOpen }) => {
         </TouchableOpacity>
         <Image source={require('../../assets/lot1.png')} style={styles.lot} />
         {cars.map((car, ind) => {
-          if (!car)
+          if (car)
             return (
               <Image
                 source={require('../../assets/car-top.png')}
