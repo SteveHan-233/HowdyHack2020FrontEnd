@@ -5,7 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Animated,
-  Modal,
+  Modal
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -15,10 +15,10 @@ const SCALE = {
   getScaleTransformationStyle(animated, startSize = 1, endSize = 0.95) {
     const interpolation = animated.interpolate({
       inputRange: [0, 1],
-      outputRange: [startSize, endSize],
+      outputRange: [startSize, endSize]
     });
     return {
-      transform: [{ scale: interpolation }],
+      transform: [{ scale: interpolation }]
     };
   },
   pressInAnimation(animated, duration = 500) {
@@ -26,7 +26,7 @@ const SCALE = {
     Animated.timing(animated, {
       toValue: 1,
       duration,
-      useNativeDriver: true,
+      useNativeDriver: true
     }).start();
   },
   pressOutAnimation(animated, duration = 500) {
@@ -34,19 +34,19 @@ const SCALE = {
     Animated.timing(animated, {
       toValue: 0,
       duration,
-      useNativeDriver: true,
+      useNativeDriver: true
     }).start();
-  },
+  }
 };
 
-export default function ParkingMarker() {
+export default function ParkingMarker({ data, lotNum }) {
   const scaleAnimated = new Animated.Value(0);
 
   return (
     <AnimatedTouchable
       style={[
         styles.container,
-        SCALE.getScaleTransformationStyle(scaleAnimated),
+        SCALE.getScaleTransformationStyle(scaleAnimated)
       ]}
       onPressIn={() => {
         SCALE.pressInAnimation(scaleAnimated);
@@ -57,7 +57,7 @@ export default function ParkingMarker() {
       activeOpacity={1}
     >
       <Ionicons name="ios-car" size={50} color="white" style={styles.caricon} />
-      <Text style={styles.percentage}>10%</Text>
+      <Text style={styles.percentage}>33%</Text>
     </AnimatedTouchable>
   );
 }
@@ -67,17 +67,17 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: "#500000",
+    backgroundColor: "#500000"
   },
   caricon: {
     marginLeft: 30,
-    marginTop: 10,
+    marginTop: 10
   },
   percentage: {
     color: "white",
     textAlign: "center",
     fontSize: 18,
     fontWeight: "800",
-    marginTop: -5,
-  },
+    marginTop: -5
+  }
 });

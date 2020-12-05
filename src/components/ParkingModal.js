@@ -5,18 +5,9 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import { lot1CarPos } from "../const";
 
-// Used to test random placement of cars
-// const genRandCars = () => {
-//   const cars = [];
-//   for (let i = 0; i < carPos.length; i++) {
-//     cars.push(Math.random() >= 0.5);
-//   }
-//   return cars;
-// };
-
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
-export default ({ modalOpen, setModalOpen }) => {
+export default ({ modalOpen, setModalOpen, data, lotNum }) => {
   const [cars, setCars] = useState([]);
 
   useEffect(async () => {
